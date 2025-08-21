@@ -1,0 +1,20 @@
+[0;1;32m●[0m docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Wed 2025-08-20 00:22:42 CEST; 5min ago
+TriggeredBy: [0;1;32m●[0m docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 259797 (dockerd)
+      Tasks: 10
+     Memory: 31.1M
+     CGroup: /system.slice/docker.service
+             └─259797 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+авг 20 00:22:42 tamara-Inspiron-3501 systemd[1]: Starting Docker Application Container Engine...
+авг 20 00:22:42 tamara-Inspiron-3501 dockerd[259797]: time="2025-08-20T00:22:42.475935549+02:00" level=info msg="Starting up"
+авг 20 00:22:42 tamara-Inspiron-3501 dockerd[259797]: time="2025-08-20T00:22:42.476862370+02:00" level=info msg="detected 127.0.0.53 nameserver, assuming systemd-resolved, so using resolv.conf: /run/systemd/resolve/resolv.conf"
+авг 20 00:22:42 tamara-Inspiron-3501 dockerd[259797]: time="2025-08-20T00:22:42.586491201+02:00" level=info msg="Loading containers: start."
+авг 20 00:22:42 tamara-Inspiron-3501 dockerd[259797]: time="2025-08-20T00:22:42.803206863+02:00" level=info msg="Loading containers: done."
+авг 20 00:22:42 tamara-Inspiron-3501 dockerd[259797]: time="2025-08-20T00:22:42.825652878+02:00" level=info msg="Docker daemon" commit="26.1.3-0ubuntu1~20.04.1" containerd-snapshotter=false storage-driver=overlay2 version=26.1.3
+авг 20 00:22:42 tamara-Inspiron-3501 dockerd[259797]: time="2025-08-20T00:22:42.825775157+02:00" level=info msg="Daemon has completed initialization"
+авг 20 00:22:42 tamara-Inspiron-3501 dockerd[259797]: time="2025-08-20T00:22:42.846587010+02:00" level=info msg="API listen on /run/docker.sock"
+авг 20 00:22:42 tamara-Inspiron-3501 systemd[1]: Started Docker Application Container Engine.
