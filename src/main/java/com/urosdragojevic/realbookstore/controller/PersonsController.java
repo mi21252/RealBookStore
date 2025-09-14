@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ public class PersonsController {
     }
 
     @GetMapping("/persons/{id}")
+    @PreAuthorize("hasAuthority('VIEW_PERSON')")
     public String person(@PathVariable int id, Model model, HttpSession session) {
         String csrf = session.getAttribute("CSRF_TOKEN").toString();
         model.addAttribute("CSRF_TOKEN", session.getAttribute("CSRF_TOKEN"));
@@ -41,6 +43,7 @@ public class PersonsController {
     }
 
     @GetMapping("/myprofile")
+    @PreAuthorize("hasAuthority('VIEW_MY_PROFILE')")
     public String self(Model model, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         model.addAttribute("person", personRepository.get("" + user.getId()));
@@ -48,6 +51,7 @@ public class PersonsController {
     }
 
     @DeleteMapping("/persons/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_PERSON')")
     public ResponseEntity<Void> person(@PathVariable int id) {
         personRepository.delete(id);
         userRepository.delete(id);
@@ -56,6 +60,7 @@ public class PersonsController {
     }
 
     @PostMapping("/update-person")
+    @PreAuthorize("hasAuthority('UPDATE_PERSON')")
     public String updatePerson(Person person, HttpSession session, @RequestParam("csrfToken") String csrfToken) throws AccessDeniedException {
         String csrf = session.getAttribute("CSRF_TOKEN").toString();
         if(!csrf.equals(csrfToken)){
@@ -66,6 +71,7 @@ public class PersonsController {
     }
 
     @GetMapping("/persons")
+    @PreAuthorize("hasAuthority('VIEW_PERSONS_LIST')")
     public String persons(Model model) {
         model.addAttribute("persons", personRepository.getAll());
         return "persons";
@@ -73,6 +79,7 @@ public class PersonsController {
 
     @GetMapping(value = "/persons/search", produces = "application/json")
     @ResponseBody
+    @PreAuthorize("hasAuthority('VIEW_PERSONS_LIST')")
     public List<Person> searchPersons(@RequestParam String searchTerm) throws SQLException {
         return personRepository.search(searchTerm);
     }

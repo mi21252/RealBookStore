@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<head>
+      layout:decorate="~{layout}"  xmlns:sec="http://www.w3.org/1999/xhtml"><head>
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -13,7 +12,7 @@
   <h1>Books</h1>
   <div class="container">
     <div class="input-group mb-3">
-      <input type="text" id="searchQuery" class="form-control">
+        <input type="text" id="searchQuery" class="form-control" th:disable="${not #authorization.expression('hasAuthority(''VIEW_BOOKS_LIST'')')}">
       <div class="input-group-append">
         <button class="btn btn-outline-primary" id="bookSearchButton" type="button" onclick="search()">Search
         </button>
@@ -22,7 +21,7 @@
     <p class="invisible">You searched for: <span id="searchTerm"></span></p>
     <p class="invisible text-danger" id="bookSearchErrorMessage">Sorry, we are facing some problems! Please try again
       later.</p>
-    <table class="table">
+      <table class="table" sec:authorize="hasAuthority('VIEW_BOOKS_LIST')">
       <thead>
       <tr>
         <th scope="col">#</th>
@@ -42,7 +41,7 @@
       </tr>
       </tbody>
     </table>
-    <a href="/create-form">Add book</a>
+      <a th:href="@{/create-form}" class="btn btn-primary" th:classappend="${not #authorization.expression('hasAuthority(''CREATE_BOOK'')')}? 'disabled'">Add book</a>
   </div>
   <template id="row-template">
     <tr>
