@@ -4,6 +4,7 @@ import com.urosdragojevic.realbookstore.domain.Rating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import com.urosdragojevic.realbookstore.audit.AuditLogger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -46,7 +47,9 @@ public class RatingRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.error("Error while rating a book!");
         }
+        AuditLogger.getAuditLogger(RatingRepository.class).audit("created/updated rating for book with id " + rating.getBookId());
     }
 
     public List<Rating> getAll(int bookId) {
@@ -60,6 +63,7 @@ public class RatingRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warn("Listing ratings for book with id " + bookId + "failed!");
         }
         return ratingList;
     }

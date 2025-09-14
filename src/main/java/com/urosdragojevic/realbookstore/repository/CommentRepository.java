@@ -1,6 +1,7 @@
 package com.urosdragojevic.realbookstore.repository;
 
 import com.urosdragojevic.realbookstore.domain.Comment;
+import com.urosdragojevic.realbookstore.audit.AuditLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,9 @@ public class CommentRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warn("Failed to insert comment '" + comment + "'");
         }
+        AuditLogger.getAuditLogger(CommentRepository.class).audit("inserted comment '" + comment + "'");
     }
 
     public List<Comment> getAll(int bookId) {
@@ -48,6 +51,8 @@ public class CommentRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            LOG.warn("getting comment list for book with id " + bookId + " failed");
+
         }
         return commentList;
     }
